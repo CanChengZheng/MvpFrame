@@ -12,13 +12,13 @@
         android:id="@+id/et_main_activity_userid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="linzhiwei"/>
+        />
 
     <EditText
         android:id="@+id/et_main_activity_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="123456"/>
+        />
 
     <Button
         android:id="@+id/btn_main_activity_login"
