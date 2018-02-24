@@ -31,7 +31,7 @@ public class LoginPresenter extends LoginContract.Presenter {
             @Override
             public void resultFailure(String s) {
                 if (getView()!= null) {
-                    getView().resultFailure(s);
+                    getView().onFailure(s);
                 }
             }
         });
