@@ -1,6 +1,5 @@
 package com.zcc.android.mvpframe.fragment;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -103,7 +102,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
         Log.d(TAG, clazz.getSimpleName() + " -- 找不到类");
         return null;
     }
-
 
     /**
      * 初始化布局和数据

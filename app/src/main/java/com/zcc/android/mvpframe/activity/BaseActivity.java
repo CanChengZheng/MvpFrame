@@ -31,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     protected final String TAG = this.getClass().getSimpleName();
 
     // 对话框
-    private CustomDialog dialog;
+    private CustomDialog mDialog;
 
     /**
      * 使用List来保存Presenter
@@ -66,10 +66,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
     /**
-     * 获取绑定的布局
+     * 获取绑定的布局ID
+     *
+     * @return 要进行绑定的布局ID
      */
     protected abstract int bindLayout();
-
 
     /**
      * 初始化Presenter
@@ -92,8 +93,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     private void attachView() {
         // 绑定View
         for (BasePresenter e : mPresenterSet) {
-            Log.d(TAG, e.getClass().getSimpleName() + " -- 绑定当前View");
             e.attachView(this);
+            Log.d(TAG, e.getClass().getSimpleName() + " -- 绑定当前View");
         }
     }
 
@@ -150,8 +151,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     private void showCustomDialog(int layoutId) {
         // 考虑多次调用的情况，先将以显示的dialog关闭
         disMissDialog();
-        dialog = new CustomDialog(this, layoutId);
-        dialog.show();
+        mDialog = new CustomDialog(this, layoutId);
+        mDialog.show();
         Log.d(TAG, "显示Dialog");
     }
 
@@ -159,8 +160,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
      * 若dialog显示，则将其关闭
      */
     public void disMissDialog() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
             Log.d(TAG, "关闭Dialog");
         }
     }
