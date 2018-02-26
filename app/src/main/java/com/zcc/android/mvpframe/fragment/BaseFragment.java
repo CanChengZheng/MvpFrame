@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zcc.android.mvpframe.mvpc.contract.IBaseView;
 import com.zcc.android.mvpframe.mvpc.presenter.BasePresenter;
 import com.zcc.android.mvpframe.mvpc.presenter.PresenterFactory;
+import com.zcc.android.mvpframe.mvpc.view.IBaseView;
 import com.zcc.android.mvpframe.util.ToastUtil;
 import com.zcc.android.mvpframe.widget.CustomDialog;
 

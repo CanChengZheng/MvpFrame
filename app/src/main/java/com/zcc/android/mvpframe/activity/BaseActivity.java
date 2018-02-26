@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.zcc.android.mvpframe.mvpc.contract.IBaseView;
 import com.zcc.android.mvpframe.mvpc.presenter.BasePresenter;
 import com.zcc.android.mvpframe.mvpc.presenter.PresenterFactory;
+import com.zcc.android.mvpframe.mvpc.view.IBaseView;
 import com.zcc.android.mvpframe.util.ToastUtil;
 import com.zcc.android.mvpframe.widget.CustomDialog;
 

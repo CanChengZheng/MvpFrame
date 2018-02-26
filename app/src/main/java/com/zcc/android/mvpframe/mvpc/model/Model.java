@@ -2,8 +2,6 @@ package com.zcc.android.mvpframe.mvpc.model;
 
 import android.util.Log;
 
-import com.zcc.android.mvpframe.util.ResultUtil;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -25,10 +23,47 @@ public class Model {
     private static final String TAG = "Model";
     private OkHttpClient client = OkHttp.getInstance();//OkHttp实例
     //单例获取Model对象
-    private static Model instance = new Model();
+    private static Model sModel = new Model();
 
     public static Model getInstance() {
-        return instance;
+        return sModel;
+    }
+
+    /**
+     * get请求
+     *
+     * @param url       接口地址
+     * @param tag       标识唯一网络请求
+     * @param iCallBack 回调接口
+     */
+    public void get(String url, String tag, final ICallBack iCallBack) {
+        final Request request = new Request.Builder().url(url).tag(tag).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //连接失败，一般来说是网络或者服务器的问题或者界面关闭导致的任务被取消
+                if (call.isCanceled()) {
+                    Log.d(TAG, "onFailure：取消网络请求 -- " + call.request().tag());
+                } else {
+                    Log.e(TAG, "onFailure：其他原因导致的网络请求失败 -- " + call.request().tag(), e);
+                    iCallBack.onFailure("网络或服务器出了小问题，请稍后再试...");
+                }
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                //连接成功，针对请求状态进行判断
+                if (response.isSuccessful()) { // 请求成功，回掉请求结果
+                    //将请求响应结果统一转为String，回调到Presenter，然后根据需求进行处理
+                    iCallBack.onSuccess(result);
+                } else { // 请求失败
+                    Log.e(TAG, "状态码：" + response.code() + "\n" + result);
+                    iCallBack.onFailure("状态码：" + response.code() + "\n" + result);
+                }
+                response.close();
+            }
+        });
     }
 
     /**
@@ -37,6 +72,7 @@ public class Model {
      * @param url Api
      * @param map 请求参数集合，封装解决不同Api请求参数不同的问题
      * @param tag 标识唯一网络请求
+     * @param callback 回调接口
      */
     public void post(String url, Map<String, Object> map, String tag, final ICallBack callback) {
         FormBody.Builder builder = new FormBody.Builder();
@@ -57,7 +93,7 @@ public class Model {
                 } else {
                     Log.e(TAG, "onFailure：其他原因导致的网络请求失败 -- " + call.request().tag() + "\n" + e.getMessage());
                     e.printStackTrace();
-                    callback.resultFailure("网络或服务器出了小问题，请稍后再试...");
+                    callback.onFailure("网络或服务器出了小问题，请稍后再试...");
                 }
             }
 
@@ -67,10 +103,10 @@ public class Model {
                 //连接成功，针对请求状态进行判断
                 if (response.isSuccessful()) {//请求成功，回掉请求结果
                     //将请求响应结果统一转为String，回掉到Presenter，然后根据需求进行处理
-                    ResultUtil.dealResult(result, callback);
+                    callback.onSuccess(result);
                 } else {//请求失败，Toast提示错误码
                     Log.e(TAG, "状态码：" + response.code() + "\n" + result);
-                    callback.resultFailure("状态码：" + response.code() + "\n" + result);
+                    callback.onFailure("状态码：" + response.code() + "\n" + result);
                 }
                 response.close();
             }

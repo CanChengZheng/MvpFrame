@@ -1,6 +1,7 @@
 package com.zcc.android.mvpframe.mvpc.contract;
 
 import com.zcc.android.mvpframe.mvpc.presenter.BasePresenter;
+import com.zcc.android.mvpframe.mvpc.view.IBaseView;
 
 /**
  * @author ZCC
@@ -8,12 +9,12 @@ import com.zcc.android.mvpframe.mvpc.presenter.BasePresenter;
  * @description
  */
 
-public interface LoginContract {
+public interface TestContract {
     interface View extends IBaseView {
-        void loginResult(String s);
+        void request(String s);
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        public abstract void loginResult(String userId, String pwd);
+        public abstract void request(String url);
     }
 }

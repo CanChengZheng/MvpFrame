@@ -2,8 +2,8 @@ package com.zcc.android.mvpframe.mvpc.presenter;
 
 import android.util.Log;
 
-import com.zcc.android.mvpframe.mvpc.contract.IBaseView;
 import com.zcc.android.mvpframe.mvpc.model.Model;
+import com.zcc.android.mvpframe.mvpc.view.IBaseView;
 
 /**
  * Presenter 基类

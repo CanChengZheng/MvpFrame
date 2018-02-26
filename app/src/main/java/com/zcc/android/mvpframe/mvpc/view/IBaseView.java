@@ -1,4 +1,4 @@
-package com.zcc.android.mvpframe.mvpc.contract;
+package com.zcc.android.mvpframe.mvpc.view;
 
 /**
  * @author ZCC
